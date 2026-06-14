@@ -9,13 +9,24 @@ export default function GalleryPage() {
   const [images, setImages] = useState<GalleryImage[]>([])
   const [loading, setLoading] = useState(true)
 
+  /** 数据库存的 tags 是 JSON 字符串，转成数组 */
+  function parseTags(tags: any): string[] {
+    if (Array.isArray(tags)) return tags
+    try {
+      return JSON.parse(tags)
+    } catch {
+      return []
+    }
+  }
+
   useEffect(() => {
     fetch("/api/gallery")
       .then((res) => res.json())
-      .then((data: GalleryImage[]) => {
+      .then((data: any[]) => {
         setImages(
           data.map((img) => ({
             ...img,
+            tags: parseTags(img.tags),
             rotate: Math.random() * 6 - 3,
           }))
         )
@@ -81,3 +92,4 @@ export default function GalleryPage() {
     </div>
   )
 }
+

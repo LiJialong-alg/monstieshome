@@ -12,6 +12,7 @@ export const siteConfig = {
   nav: [
     { label: "首页", href: "/" },
     { label: "成员", href: "/members" },
+    { label: "合照", href: "/photo-booth" },
     { label: "照片", href: "/gallery" },
     { label: "公告", href: "/announcements" },
     { label: "外链", href: "/links" },
