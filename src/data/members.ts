@@ -25,7 +25,7 @@ export const members: Member[] = [
     bio: "",
     avatar: "",
     gradient: "from-pink-400 to-rose-400",
-    emoji: "🌸",
+    emoji: "🦥", // 树懒
     sortOrder: 1,
   },
   {
@@ -35,7 +35,7 @@ export const members: Member[] = [
     bio: "",
     avatar: "",
     gradient: "from-purple-400 to-violet-400",
-    emoji: "🦋",
+    emoji: "🦌", // 小鹿
     sortOrder: 2,
   },
   {
@@ -45,7 +45,7 @@ export const members: Member[] = [
     bio: "",
     avatar: "",
     gradient: "from-blue-400 to-cyan-400",
-    emoji: "⭐",
+    emoji: "🐱", // 粉色猫 -> 用 🐱，Asa 代表色是蓝/青
     sortOrder: 3,
   },
   {
@@ -55,7 +55,7 @@ export const members: Member[] = [
     bio: "",
     avatar: "",
     gradient: "from-amber-400 to-orange-400",
-    emoji: "🌻",
+    emoji: "🦋", // 蝴蝶
     sortOrder: 4,
   },
   {
@@ -65,7 +65,7 @@ export const members: Member[] = [
     bio: "",
     avatar: "",
     gradient: "from-green-400 to-emerald-400",
-    emoji: "🌱",
+    emoji: "🐬", // 海豚
     sortOrder: 5,
   },
   {
@@ -75,7 +75,7 @@ export const members: Member[] = [
     bio: "",
     avatar: "",
     gradient: "from-sky-400 to-blue-400",
-    emoji: "🌊",
+    emoji: "🐼", // 熊猫
     sortOrder: 6,
   },
   {
@@ -85,7 +85,7 @@ export const members: Member[] = [
     bio: "",
     avatar: "",
     gradient: "from-yellow-400 to-pink-400",
-    emoji: "🐱",
+    emoji: "🐈‍⬛", // 黑猫
     sortOrder: 7,
   },
 ]
@@ -97,3 +97,4 @@ export function getMemberById(id: string): Member | undefined {
 export function getMemberByPagePath(path: string): Member | undefined {
   return members.find((m) => m.name.toLowerCase() === path.toLowerCase())
 }
+

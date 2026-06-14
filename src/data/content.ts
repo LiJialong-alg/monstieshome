@@ -16,6 +16,15 @@ export interface HighlightItem {
   tag?: string
 }
 
+// 主页展示的近期公告（前端获取最新几条）
+export interface HomeAnnouncement {
+  id: string
+  title: string
+  date: string
+  summary: string
+  tags: string[]
+}
+
 export const homeFeatures: FeatureCard[] = [
   {
     title: "最新照片",
@@ -86,3 +95,4 @@ export const recentUploads: HighlightItem[] = [
     tag: "新到",
   },
 ]
+

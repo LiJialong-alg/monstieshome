@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma"
 export async function GET() {
   const items = await prisma.announcement.findMany({
     orderBy: [{ pinned: "desc" }, { createdAt: "desc" }],
+    take: 5,
   })
   return NextResponse.json(items)
 }
@@ -22,3 +23,4 @@ export async function POST(req: NextRequest) {
   })
   return NextResponse.json(item, { status: 201 })
 }
+
