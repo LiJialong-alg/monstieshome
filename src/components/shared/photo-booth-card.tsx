@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import { Camera, Sparkles, ArrowRight } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 
-export function PhotoBoothCard() {
+export function PhotoBoothSection() {
   return (
     <section className="px-4 py-4 sm:px-6">
       <div className="mx-auto max-w-5xl">

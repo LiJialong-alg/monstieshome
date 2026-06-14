@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "Monsties Home",
   shortName: "MHome",
-  tagline: "欢迎来到小怪兽们的家 🏠",
+  tagline: "欢迎来到宝宝怪兽们的家",
   description: "一个属于粉丝的小小角落，记录美好瞬间，分享应援热情。",
   url: "https://monstieshome.com",
   since: 2025,

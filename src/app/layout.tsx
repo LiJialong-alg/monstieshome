@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { AnnouncementBanner } from "@/components/shared/announcement-home-card";
 import { siteConfig } from "@/data/site";
 
 const geistSans = Geist({
@@ -35,9 +36,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-gradient-to-br from-purple-50 via-white to-pink-50">
         <Navbar />
+        <AnnouncementBanner />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>
     </html>
   );
 }
+

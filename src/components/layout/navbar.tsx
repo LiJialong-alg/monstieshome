@@ -11,7 +11,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-purple-100/40 bg-white/70 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 w-full border-b border-purple-100/40 bg-purple-50/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3 sm:px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
@@ -50,7 +50,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-t border-purple-100/40 bg-white/90 backdrop-blur-xl sm:hidden"
+            className="overflow-hidden border-t border-purple-100/40 bg-purple-50/80 backdrop-blur-xl sm:hidden"
           >
             <nav className="flex flex-col px-4 py-3 gap-1">
               {siteConfig.nav.map((item) => (

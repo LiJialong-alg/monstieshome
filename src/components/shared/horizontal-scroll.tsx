@@ -24,7 +24,7 @@ export function HorizontalScroll({ images, loading }: HorizontalScrollProps) {
       <div className="mx-auto max-w-5xl">
         {/* 标题 + 查看更多 */}
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="font-semibold text-gray-700">📸 最新上传</h2>
+          <h2 className="font-semibold text-gray-700">照片墙</h2>
           <Link
             href="/gallery"
             className="flex items-center gap-0.5 text-sm text-purple-500 hover:text-purple-700 transition-colors"
@@ -123,3 +123,4 @@ export function HorizontalScroll({ images, loading }: HorizontalScrollProps) {
     </section>
   )
 }
+
