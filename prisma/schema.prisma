@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Image {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @default("")
+  src         String   @default("")
+  tags        String   @default("[]")
+  link        String   @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Announcement {
+  id        String   @id @default(cuid())
+  title     String
+  date      String
+  summary   String
+  tags      String   @default("[]")
+  pinned    Boolean  @default(false)
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ExternalLink {
+  id          String   @id @default(cuid())
+  name        String
+  description String   @default("")
+  url         String
+  icon        String   @default("Globe")
+  category    String   @default("未分类")
+  sortOrder   Int      @default(0)
+  visible     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+

@@ -3,17 +3,24 @@
 import { useEffect, useState } from "react"
 import { Camera, ChevronDown } from "lucide-react"
 import { PolaroidCard } from "@/components/shared/polaroid-card"
-import { getAllImages, type GalleryImage } from "@/data/gallery"
+import type { GalleryImage } from "@/data/gallery"
 
 export default function GalleryPage() {
   const [images, setImages] = useState<GalleryImage[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getAllImages().then((data) => {
-      setImages(data)
-      setLoading(false)
-    })
+    fetch("/api/gallery")
+      .then((res) => res.json())
+      .then((data: GalleryImage[]) => {
+        setImages(
+          data.map((img) => ({
+            ...img,
+            rotate: Math.random() * 6 - 3,
+          }))
+        )
+        setLoading(false)
+      })
   }, [])
 
   return (
