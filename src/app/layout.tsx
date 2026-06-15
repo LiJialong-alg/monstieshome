@@ -4,6 +4,8 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { AnnouncementBanner } from "@/components/shared/announcement-home-card";
+import { AudioProvider } from "@/lib/audio-context";
+import { GlobalMusicPlayer } from "@/components/shared/global-music-player";
 import { siteConfig } from "@/data/site";
 
 const geistSans = Geist({
@@ -35,10 +37,13 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-gradient-to-br from-purple-50 via-white to-pink-50">
-        <Navbar />
-        <AnnouncementBanner />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <AudioProvider>
+          <Navbar />
+          <AnnouncementBanner />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <GlobalMusicPlayer />
+        </AudioProvider>
       </body>
     </html>
   );

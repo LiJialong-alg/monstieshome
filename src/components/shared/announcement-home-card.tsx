@@ -42,7 +42,7 @@ export function AnnouncementBanner() {
         </div>
         {item.date && (
           <span className="shrink-0 text-[10px] text-gray-400 hidden sm:block">
-            {new Date(item.date || item.createdAt).toLocaleDateString("zh-CN")}
+            {new Date(item.date).toLocaleDateString("zh-CN")}
           </span>
         )}
       </div>
