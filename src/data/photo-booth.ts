@@ -66,11 +66,12 @@ export const poseTemplates: PoseTemplate[] = [
   {
     id: "pose-heart",
     name: "比心",
-    description: "和爱豆一起比心 ❤️",
-    guideRect: { x: 0.52, y: 0.08, width: 0.4, height: 0.7 },
-    hint: "站到右侧框内，对着镜头比心～",
-    idolRect: { x: 0.05, y: 0.08, width: 0.4, height: 0.7 },
-    idolSrc: placeholderSVG("❤️", "比心姿势"),
+    description: "一起比心 ❤️",
+    // 粉丝在左侧（0.05~0.45），爱豆在右侧（0.52~0.92）
+    guideRect: { x: 0.05, y: 0.08, width: 0.4, height: 0.7 },
+    hint: "站到左侧框内，对着镜头比心～",
+    idolRect: { x: 0.52, y: 0.08, width: 0.4, height: 0.7 },
+    idolSrc: "/images/photo-booth/karina.png",
     thumbnail: thumbSVG("❤️", "比心"),
   },
   {

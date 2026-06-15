@@ -10,6 +10,7 @@ import { PoseGuide } from "@/components/photo-booth/pose-guide"
 import { PhotoFrame, type PhotoFrameHandle } from "@/components/photo-booth/photo-frame"
 import { ExportButtons, PreviewModal } from "@/components/photo-booth/composite-canvas"
 import { poseTemplates, getPoseById, type PoseTemplate } from "@/data/photo-booth"
+import { Maximize2, Minimize2 } from "lucide-react"
 
 export default function PhotoBoothPage() {
   const [cameraActive, setCameraActive] = useState(false)
@@ -19,6 +20,8 @@ export default function PhotoBoothPage() {
   const [previewUrl, setPreviewUrl] = useState("")
   const [showPreview, setShowPreview] = useState(false)
   const [guideContainerSize, setGuideContainerSize] = useState({ width: 0, height: 0 })
+  const [userScale, setUserScale] = useState(1)
+  const [idolScale, setIdolScale] = useState(1)
 
   const frameRef = useRef<PhotoFrameHandle>(null)
   const guideContainerRef = useRef<HTMLDivElement>(null)
@@ -29,6 +32,9 @@ export default function PhotoBoothPage() {
   const handleCameraReady = useCallback((video: HTMLVideoElement) => {
     setVideoEl(video)
   }, [])
+
+  // 场景背景图
+  const sceneBg = `/images/photo-booth/scenes/background.png`
 
   // 加载爱豆素材
   useEffect(() => {
@@ -88,26 +94,26 @@ export default function PhotoBoothPage() {
         <div className="flex items-center gap-1.5">
           <Sparkles size={18} className="text-pink-500" />
           <h1 className="bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-lg font-bold text-transparent">
-            与爱豆合照
+            与她们合照
           </h1>
         </div>
       </div>
 
       {/* 主内容区 */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* 左侧：摄像头 + 姿势选择 */}
-        <div className="space-y-5 lg:col-span-3">
+        <div className="space-y-5">
           {/* 摄像头预览 */}
           <div className="relative" ref={guideContainerRef}>
             <CameraPreview
               active={cameraActive}
               onReady={handleCameraReady}
-              onError={() => {}}
+              onError={() => { }}
             />
 
             {/* 姿势引导框（摄像头开启时显示） */}
             {cameraActive && videoEl && guideContainerSize.width > 0 && (
-              <div className="absolute inset-0" style={{ 
+              <div className="absolute inset-0" style={{
                 margin: '4%', // 对应 photo-frame 的 padding
                 marginBottom: '18%', // 对应 bottomMargin
               }}>
@@ -151,7 +157,7 @@ export default function PhotoBoothPage() {
         </div>
 
         {/* 右侧：合成预览 */}
-        <div className="space-y-4 lg:col-span-2">
+        <div className="space-y-4">
           {/* 合成画布标题 */}
           <div className="flex items-center gap-1.5">
             <Sparkles size={14} className="text-purple-400" />
@@ -171,9 +177,63 @@ export default function PhotoBoothPage() {
                 videoEl={videoEl}
                 pose={currentPose}
                 idolLoaded={idolLoaded}
+                sceneBg={sceneBg}
+                userScale={userScale}
+                idolScale={idolScale}
               />
             </motion.div>
           </AnimatePresence>
+
+          {/* 大小调节 */}
+          {cameraActive && (
+            <div className="space-y-2 rounded-xl bg-gradient-to-br from-purple-50/60 to-pink-50/60 p-2.5">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1 text-[10px] text-gray-400">
+                  <span className="inline-block h-2.5 w-2.5 rounded-sm bg-pink-300" />
+                  爱豆大小
+                </div>
+                <div className="flex items-center gap-0.5">
+                  <span className="text-[10px] text-gray-300">{idolScale.toFixed(1)}x</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5 px-1">
+                <Minimize2 size={10} className="text-gray-300" />
+                <input
+                  type="range"
+                  min={0.5}
+                  max={2}
+                  step={0.1}
+                  value={idolScale}
+                  onChange={(e) => setIdolScale(Number(e.target.value))}
+                  className="h-1 w-full appearance-none rounded-full bg-purple-100 accent-pink-500"
+                />
+                <Maximize2 size={10} className="text-gray-300" />
+              </div>
+
+              <div className="mt-1 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1 text-[10px] text-gray-400">
+                  <span className="inline-block h-2.5 w-2.5 rounded-sm bg-blue-300" />
+                  自己大小
+                </div>
+                <div className="flex items-center gap-0.5">
+                  <span className="text-[10px] text-gray-300">{userScale.toFixed(1)}x</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5 px-1">
+                <Minimize2 size={10} className="text-gray-300" />
+                <input
+                  type="range"
+                  min={0.5}
+                  max={2}
+                  step={0.1}
+                  value={userScale}
+                  onChange={(e) => setUserScale(Number(e.target.value))}
+                  className="h-1 w-full appearance-none rounded-full bg-purple-100 accent-blue-400"
+                />
+                <Maximize2 size={10} className="text-gray-300" />
+              </div>
+            </div>
+          )}
 
           {/* 导出按钮 */}
           <ExportButtons captureFn={() => frameRef.current?.capture() ?? ""} onExported={handleExported} />
@@ -187,7 +247,7 @@ export default function PhotoBoothPage() {
             <p>4. 点击「拍照合成」生成拍立得照片</p>
             <p>5. 导出 PNG 或 JPG 保存到相册</p>
             <p className="mt-1 text-purple-400">
-              ✨ 提示：使用后置摄像头效果更佳！
+              ✨ 提示：使用前置摄像头效果更佳！
             </p>
           </div>
         </div>
@@ -237,3 +297,5 @@ export default function PhotoBoothPage() {
     </div>
   )
 }
+
+

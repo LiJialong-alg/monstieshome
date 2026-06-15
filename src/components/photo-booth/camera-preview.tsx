@@ -92,7 +92,7 @@ export function CameraPreview({ active, onReady, onError }: CameraPreviewProps) 
   }, [facingMode])
 
   return (
-    <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-2xl bg-gray-900 shadow-lg">
+    <div className="relative mx-auto w-full overflow-hidden rounded-2xl bg-gray-900 shadow-lg">
       {/* 摄像头画面 */}
       {status === "idle" && (
         <div className="flex aspect-[4/3] items-center justify-center bg-gradient-to-br from-purple-200 to-pink-200">
