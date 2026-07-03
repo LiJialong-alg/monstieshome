@@ -32,15 +32,6 @@ export function PoseGuide({ pose, containerWidth, containerHeight }: PoseGuidePr
         height,
       }}
     >
-      {/* 虚线框 */}
-      <div
-        className="h-full w-full rounded-2xl border-2 border-dashed"
-        style={{
-          borderColor: "rgba(255, 255, 255, 0.6)",
-          boxShadow: "inset 0 0 30px rgba(255,255,255,0.08)",
-        }}
-      />
-
       {/* 提示文字 */}
       <motion.div
         initial={{ opacity: 0, y: 8 }}

@@ -20,8 +20,8 @@ export default function PhotoBoothPage() {
   const [previewUrl, setPreviewUrl] = useState("")
   const [showPreview, setShowPreview] = useState(false)
   const [guideContainerSize, setGuideContainerSize] = useState({ width: 0, height: 0 })
-  const [userScale, setUserScale] = useState(1)
   const [idolScale, setIdolScale] = useState(1)
+  const [mirrored, setMirrored] = useState(true)
 
   const frameRef = useRef<PhotoFrameHandle>(null)
   const guideContainerRef = useRef<HTMLDivElement>(null)
@@ -99,16 +99,17 @@ export default function PhotoBoothPage() {
         </div>
       </div>
 
-      {/* 主内容区 */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      {/* 主内容区：左右等高对齐 */}
+      <div className="flex flex-col gap-6 lg:flex-row">
         {/* 左侧：摄像头 + 姿势选择 */}
-        <div className="space-y-5">
+        <div className="flex w-full flex-col space-y-5 lg:w-1/2 lg:sticky lg:top-6 lg:self-start">
           {/* 摄像头预览 */}
           <div className="relative" ref={guideContainerRef}>
             <CameraPreview
               active={cameraActive}
               onReady={handleCameraReady}
               onError={() => { }}
+              onFacingModeChange={(isUser) => setMirrored(isUser)}
             />
 
             {/* 姿势引导框（摄像头开启时显示） */}
@@ -157,7 +158,7 @@ export default function PhotoBoothPage() {
         </div>
 
         {/* 右侧：合成预览 */}
-        <div className="space-y-4">
+        <div className="flex w-full flex-col space-y-4 lg:w-1/2">
           {/* 合成画布标题 */}
           <div className="flex items-center gap-1.5">
             <Sparkles size={14} className="text-purple-400" />
@@ -178,13 +179,14 @@ export default function PhotoBoothPage() {
                 pose={currentPose}
                 idolLoaded={idolLoaded}
                 sceneBg={sceneBg}
-                userScale={userScale}
+                userScale={1}
                 idolScale={idolScale}
+                mirrored={mirrored}
               />
             </motion.div>
           </AnimatePresence>
 
-          {/* 大小调节 */}
+          {/* 大小调节：爱豆大小 */}
           {cameraActive && (
             <div className="space-y-2 rounded-xl bg-gradient-to-br from-purple-50/60 to-pink-50/60 p-2.5">
               <div className="flex items-center justify-between gap-2">
@@ -206,29 +208,6 @@ export default function PhotoBoothPage() {
                   value={idolScale}
                   onChange={(e) => setIdolScale(Number(e.target.value))}
                   className="h-1 w-full appearance-none rounded-full bg-purple-100 accent-pink-500"
-                />
-                <Maximize2 size={10} className="text-gray-300" />
-              </div>
-
-              <div className="mt-1 flex items-center justify-between gap-2">
-                <div className="flex items-center gap-1 text-[10px] text-gray-400">
-                  <span className="inline-block h-2.5 w-2.5 rounded-sm bg-blue-300" />
-                  自己大小
-                </div>
-                <div className="flex items-center gap-0.5">
-                  <span className="text-[10px] text-gray-300">{userScale.toFixed(1)}x</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-1.5 px-1">
-                <Minimize2 size={10} className="text-gray-300" />
-                <input
-                  type="range"
-                  min={0.5}
-                  max={2}
-                  step={0.1}
-                  value={userScale}
-                  onChange={(e) => setUserScale(Number(e.target.value))}
-                  className="h-1 w-full appearance-none rounded-full bg-purple-100 accent-blue-400"
                 />
                 <Maximize2 size={10} className="text-gray-300" />
               </div>

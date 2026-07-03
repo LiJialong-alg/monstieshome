@@ -10,9 +10,11 @@ interface CameraPreviewProps {
   onReady: (video: HTMLVideoElement) => void
   /** 摄像头出错时回调 */
   onError?: (error: string) => void
+  /** 摄像头翻转时回调，告知外部当前是否是前置摄像头 */
+  onFacingModeChange?: (isUser: boolean) => void
 }
 
-export function CameraPreview({ active, onReady, onError }: CameraPreviewProps) {
+export function CameraPreview({ active, onReady, onError, onFacingModeChange }: CameraPreviewProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const streamRef = useRef<MediaStream | null>(null)
   const [status, setStatus] = useState<"idle" | "starting" | "ready" | "error">("idle")
@@ -71,8 +73,12 @@ export function CameraPreview({ active, onReady, onError }: CameraPreviewProps) 
   }, [])
 
   const toggleCamera = useCallback(() => {
-    setFacingMode((prev) => (prev === "user" ? "environment" : "user"))
-  }, [])
+    setFacingMode((prev) => {
+      const next = prev === "user" ? "environment" : "user"
+      onFacingModeChange?.(next === "user")
+      return next
+    })
+  }, [onFacingModeChange])
 
   useEffect(() => {
     if (active) {
@@ -112,7 +118,7 @@ export function CameraPreview({ active, onReady, onError }: CameraPreviewProps) 
         autoPlay
         playsInline
         muted
-        className={`aspect-[4/3] w-full object-cover ${status === "ready" ? "block" : "hidden"}`}
+        className={`aspect-[4/3] w-full object-cover [transform:scaleX(-1)] ${status === "ready" ? "block" : "hidden"}`}
       />
 
       {status === "error" && (
@@ -124,14 +130,11 @@ export function CameraPreview({ active, onReady, onError }: CameraPreviewProps) 
 
       {/* 底部控制栏 */}
       <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center gap-3 bg-gradient-to-t from-black/60 to-transparent p-3">
-        {status === "idle" && (
-          <button
-            onClick={startCamera}
-            className="flex items-center gap-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-5 py-2 text-sm font-medium text-white shadow-lg transition-all hover:scale-105 active:scale-95"
-          >
-            <Camera size={16} />
-            开启摄像头
-          </button>
+        {status === "starting" && (
+          <span className="rounded-full bg-white/20 px-4 py-1.5 text-xs text-white backdrop-blur-sm">
+            <RefreshCw size={14} className="inline mr-1 animate-spin" />
+            启动中...
+          </span>
         )}
 
         {status === "ready" && (
