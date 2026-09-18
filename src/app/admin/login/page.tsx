@@ -34,7 +34,7 @@ export default function AdminLoginPage() {
         return
       }
 
-      router.replace("/admin/gallery")
+      router.replace("/admin/questions")
     } catch {
       setError("网络错误，请稍后重试")
       setLoading(false)
@@ -59,7 +59,7 @@ export default function AdminLoginPage() {
         </div>
 
         {/* 表单 */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" autoComplete="off">
           {/* 用户名 */}
           <div>
             <label className="mb-1.5 block text-sm font-medium text-gray-600">用户名</label>
@@ -70,6 +70,8 @@ export default function AdminLoginPage() {
               />
               <input
                 type="text"
+                name="admin-login-user"
+                autoComplete="off"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="admin"
@@ -89,6 +91,8 @@ export default function AdminLoginPage() {
               />
               <input
                 type={showPassword ? "text" : "password"}
+                name="admin-login-password"
+                autoComplete="new-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"

@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/members/layout,_N_T_/members/pharita/layout,_N_T_/members/pharita/page,_N_T_/members/pharita"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/members/pharita/__PAGE__",
+    "/members/pharita",
+    "/members",
+    "/_index",
+    "/_head"
+  ]
+}

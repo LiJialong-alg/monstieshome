@@ -226,7 +226,7 @@ export const PhotoFrame = forwardRef<PhotoFrameHandle, PhotoFrameProps>(
         ctx.fillStyle = "#888"
         ctx.font = `italic ${Math.round(cw * 0.035)}px serif`
         ctx.textAlign = "center"
-        ctx.fillText("monsties home", cw / 2, textY + 8)
+        ctx.fillText("monstiez home", cw / 2, textY + 8)
 
         const dateStr = new Date().toLocaleDateString("zh-CN", {
           year: "numeric",

@@ -1,0 +1,3 @@
+module.exports=[88615,a=>{"use strict";var b=a.i(87924),c=a.i(50944),d=a.i(72131);a.s(["default",0,function({children:a}){let e=(0,c.usePathname)(),f=(0,c.useRouter)(),[g,h]=(0,d.useState)(""),[i,j]=(0,d.useState)(!0);return((0,d.useEffect)(()=>{fetch("/api/auth/me").then(a=>a.json()).then(a=>{a.authenticated&&h(a.user.username),j(!1)}).catch(()=>j(!1))},[]),"/admin/login"===e)?a:i||g?(0,b.jsx)("div",{className:"mx-auto min-h-[80vh] max-w-6xl px-4 py-8",children:(0,b.jsx)("div",{className:"rounded-3xl border border-violet-100 bg-white/80 p-5 shadow-xl shadow-violet-100/30 sm:p-7",children:a})}):(f.replace("/admin/login"),null)}])}];
+
+//# sourceMappingURL=src_app_admin_layout_tsx_1uoybak._.js.map

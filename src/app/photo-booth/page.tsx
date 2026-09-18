@@ -256,7 +256,7 @@ export default function PhotoBoothPage() {
                 onClick={() => {
                   const a = document.createElement("a")
                   a.href = previewUrl
-                  a.download = `monsties-photo-${Date.now()}.png`
+                  a.download = `monstiez-photo-${Date.now()}.png`
                   a.click()
                 }}
                 className="rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-5 py-2 text-xs font-medium text-white shadow-sm transition-all hover:scale-105"

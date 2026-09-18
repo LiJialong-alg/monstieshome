@@ -7,7 +7,7 @@ import { X } from "lucide-react"
 interface Field {
   key: string
   label: string
-  type: "text" | "textarea" | "boolean" | "number" | "tags"
+  type: "text" | "textarea" | "boolean" | "number" | "tags" | "image"
   required?: boolean
   placeholder?: string
 }
@@ -19,6 +19,7 @@ interface AdminFormModalProps {
   fields: Field[]
   initial?: Record<string, any>
   title: string
+  onImageUpload?: (file: File) => Promise<string>
 }
 
 export function AdminFormModal({
@@ -28,6 +29,7 @@ export function AdminFormModal({
   fields,
   initial,
   title,
+  onImageUpload,
 }: AdminFormModalProps) {
   const [form, setForm] = useState<Record<string, any>>({})
   const [saving, setSaving] = useState(false)
@@ -86,7 +88,7 @@ export function AdminFormModal({
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-lg rounded-2xl border border-purple-100/60 bg-white p-6 shadow-xl"
+            className="relative max-h-[calc(100vh-2rem)] w-full max-w-lg overflow-y-auto rounded-2xl border border-purple-100/60 bg-white p-6 shadow-xl"
           >
             {/* 标题 */}
             <div className="mb-5 flex items-center justify-between">
@@ -107,7 +109,12 @@ export function AdminFormModal({
                     {field.required && <span className="text-pink-400 ml-0.5">*</span>}
                   </label>
 
-                  {field.type === "textarea" ? (
+                  {field.type === "image" ? (
+                    <div className="flex items-center gap-3">
+                      <input type="text" value={form[field.key] ?? ""} onChange={(e) => set(field.key, e.target.value)} placeholder="上传后自动填入图片地址" className="min-w-0 flex-1 rounded-xl border border-purple-100/60 bg-purple-50/30 px-3 py-2 text-sm text-gray-700" />
+                      <label className="shrink-0 cursor-pointer rounded-full border border-violet-200 px-3 py-2 text-xs text-violet-600 hover:bg-violet-50">上传图片<input type="file" accept="image/*" className="hidden" onChange={async (e) => { const file = e.target.files?.[0]; if (!file || !onImageUpload) return; try { set(field.key, await onImageUpload(file)) } catch (error) { alert(error instanceof Error ? error.message : "上传失败") } e.target.value = "" }} /></label>
+                    </div>
+                  ) : field.type === "textarea" ? (
                     <textarea
                       value={form[field.key] ?? ""}
                       onChange={(e) => set(field.key, e.target.value)}

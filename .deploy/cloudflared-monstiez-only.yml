@@ -1,0 +1,23 @@
+tunnel: bbfc1ab3-4705-4a3b-a245-481b9c2849f8
+credentials-file: /etc/cloudflared/bbfc1ab3-4705-4a3b-a245-481b9c2849f8.json
+
+ingress:
+  - hostname: lijialong.online
+    service: http://localhost:80
+  - hostname: plat.lijialong.online
+    service: http://localhost:80
+  - hostname: rentapp.lijialong.online
+    service: http://localhost:80
+  - hostname: rentadmin.lijialong.online
+    service: http://localhost:80
+  - hostname: meituan.lijialong.online
+    service: http://localhost:80
+  - hostname: flower.lijialong.online
+    service: http://localhost:80
+  - hostname: hotel.lijialong.online
+    service: http://localhost:80
+  - hostname: minio.lijialong.online
+    service: http://localhost:80
+  - hostname: monstiez.lijialong.online
+    service: http://localhost:80
+  - service: http_status:404

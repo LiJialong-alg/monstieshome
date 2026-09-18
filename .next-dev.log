@@ -1,0 +1,24 @@
+
+> monstieshome@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.56.1:3000
+- Environments: .env
+✓ Ready in 977ms
+
+ GET /admin/questions 200 in 1422ms (next.js: 833ms, proxy.ts: 342ms, application-code: 247ms)
+ GET / 200 in 1416ms (next.js: 470ms, application-code: 945ms)
+ GET /api/auth/me 200 in 281ms (next.js: 262ms, application-code: 19ms)
+ GET /api/questions 200 in 291ms (next.js: 150ms, application-code: 141ms)
+MinIO upload failed: Error: connect EACCES 192.168.2.18:9000
+    at <unknown> (Error: connect EACCES 192.168.2.18:9000) {
+  errno: -4092,
+  code: 'EACCES',
+  syscall: 'connect',
+  address: '192.168.2.18',
+  port: 9000
+}
+ POST /api/upload 500 in 219ms (next.js: 178ms, application-code: 41ms)
+[?25h

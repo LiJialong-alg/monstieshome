@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/members/layout,_N_T_/members/rami/layout,_N_T_/members/rami/page,_N_T_/members/rami"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/members/rami/__PAGE__",
+    "/members/rami",
+    "/members",
+    "/_index",
+    "/_head"
+  ]
+}

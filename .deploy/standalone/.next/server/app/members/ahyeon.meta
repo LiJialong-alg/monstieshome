@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/members/layout,_N_T_/members/ahyeon/layout,_N_T_/members/ahyeon/page,_N_T_/members/ahyeon"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/members/ahyeon/__PAGE__",
+    "/members/ahyeon",
+    "/members",
+    "/_index",
+    "/_head"
+  ]
+}

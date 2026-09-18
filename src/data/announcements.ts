@@ -22,7 +22,7 @@ const mockAnnouncements: Announcement[] = [
     id: "a001",
     title: "🎉 站点正式上线啦！",
     date: "2025-06-14",
-    summary: "经过一段时间的准备，Monsties Home 终于和大家见面了！目前首页、照片墙、公告、外链导航等功能已初步完成，后续会持续更新内容和功能。欢迎常来玩～",
+    summary: "经过一段时间的准备，Monstiez Home 终于和大家见面了！目前首页、照片墙、公告、外链导航等功能已初步完成，后续会持续更新内容和功能。欢迎常来玩～",
     tags: ["站点公告"],
     pinned: true,
     visible: true,

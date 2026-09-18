@@ -40,11 +40,11 @@ export function ExportButtons({ captureFn, onExported }: CompositeCanvasProps) {
           ctx.fillRect(0, 0, c.width, c.height)
           ctx.drawImage(img, 0, 0)
           const jpgUrl = c.toDataURL("image/jpeg", 0.92)
-          downloadFile(jpgUrl, `monsties-photo.${ext}`)
+          downloadFile(jpgUrl, `monstiez-photo.${ext}`)
         }
         img.src = dataUrl
       } else {
-        downloadFile(dataUrl, `monsties-photo.${ext}`)
+        downloadFile(dataUrl, `monstiez-photo.${ext}`)
       }
     },
     [captureFn, onExported]

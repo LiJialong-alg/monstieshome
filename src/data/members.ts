@@ -35,7 +35,7 @@ export const members: Member[] = [
     bio: "",
     avatar: "",
     gradient: "from-purple-400 to-violet-400",
-    emoji: "🦌", // 小鹿
+    emoji: "🦌", // 小鹿头部
     sortOrder: 2,
   },
   {
@@ -45,7 +45,7 @@ export const members: Member[] = [
     bio: "",
     avatar: "",
     gradient: "from-blue-400 to-cyan-400",
-    emoji: "🐱", // 粉色猫 -> 用 🐱，Asa 代表色是蓝/青
+    emoji: "🐰", // 小兔子
     sortOrder: 3,
   },
   {
@@ -55,7 +55,7 @@ export const members: Member[] = [
     bio: "",
     avatar: "",
     gradient: "from-amber-400 to-orange-400",
-    emoji: "🦋", // 蝴蝶
+    emoji: "🐱", // 小猫
     sortOrder: 4,
   },
   {
@@ -97,4 +97,3 @@ export function getMemberById(id: string): Member | undefined {
 export function getMemberByPagePath(path: string): Member | undefined {
   return members.find((m) => m.name.toLowerCase() === path.toLowerCase())
 }
-

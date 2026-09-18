@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { ImageIcon, ExternalLink, Heart } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { GalleryImage } from "@/data/gallery"
+import { StatusImage } from "@/components/shared/status-image"
 
 interface PolaroidCardProps {
   image: GalleryImage
@@ -42,7 +43,7 @@ export function PolaroidCard({ image, className }: PolaroidCardProps) {
             <ImageIcon size={40} className="text-purple-300/50" />
           </div>
         ) : (
-          <img
+          <StatusImage
             src={image.src}
             alt={image.title}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"

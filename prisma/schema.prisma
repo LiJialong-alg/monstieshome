@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -52,3 +53,42 @@ model ExternalLink {
   updatedAt   DateTime @updatedAt
 }
 
+model Question {
+  id          String   @id @default(cuid())
+  scope       String   @default("group") // group | member
+  memberId    String   @default("")
+  question    String
+  image       String   @default("")
+  options     String   // JSON array
+  answer      Int
+  explanation String   @default("")
+  difficulty  String   @default("入门")
+  visible     Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([scope, memberId, sortOrder])
+}
+
+model QuizAttempt {
+  id        String   @id @default(cuid())
+  scope     String
+  memberId  String   @default("")
+  score     Float
+  answers   String   @default("[]")
+  createdAt DateTime @default(now())
+
+  @@index([scope, memberId, score])
+}
+
+model WrongAnswer {
+  id             String   @id @default(cuid())
+  attemptId      String
+  questionId     String
+  selectedOption Int
+  correctOption  Int
+  createdAt      DateTime @default(now())
+
+  @@index([questionId])
+}

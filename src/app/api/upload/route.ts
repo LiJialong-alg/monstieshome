@@ -1,46 +1,57 @@
 import { NextRequest, NextResponse } from "next/server"
-import { writeFile, mkdir } from "fs/promises"
-import path from "path"
+import { randomUUID } from "crypto"
+import { ensureQuestionBucket } from "@/lib/minio"
+import { requireAdmin } from "@/lib/admin-auth"
+
+export const runtime = "nodejs"
+
+const allowedTypes: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/gif": "gif",
+  "image/webp": "webp",
+}
 
 export async function POST(req: NextRequest) {
+  const denied = await requireAdmin()
+  if (denied) return denied
   try {
     const formData = await req.formData()
-    const file = formData.get("file") as File | null
+    const file = formData.get("file")
 
-    if (!file) {
-      return NextResponse.json({ error: "请选择文件" }, { status: 400 })
+    if (!(file instanceof File)) {
+      return NextResponse.json({ error: "请选择图片文件" }, { status: 400 })
     }
 
-    // 验证文件类型
-    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"]
-    if (!allowedTypes.includes(file.type)) {
-      return NextResponse.json({ error: "只支持 JPG/PNG/GIF/WebP 格式" }, { status: 400 })
+    const extension = allowedTypes[file.type]
+    if (!extension) {
+      return NextResponse.json({ error: "只支持 JPG、PNG、GIF 和 WebP 图片" }, { status: 400 })
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      return NextResponse.json({ error: "图片大小不能超过 10MB" }, { status: 400 })
     }
 
-    // 限制文件大小 5MB
-    if (file.size > 5 * 1024 * 1024) {
-      return NextResponse.json({ error: "文件大小不能超过 5MB" }, { status: 400 })
-    }
-
-    // 生成唯一文件名
-    const ext = file.name.split(".").pop() || "jpg"
-    const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
-
-    // 确保 uploads 目录存在
-    const uploadDir = path.join(process.cwd(), "public", "uploads")
-    await mkdir(uploadDir, { recursive: true })
-
-    // 写入文件
+    const { client, config } = await ensureQuestionBucket()
+    const now = new Date()
+    const objectName = `questions/${now.getUTCFullYear()}/${String(now.getUTCMonth() + 1).padStart(2, "0")}/${randomUUID()}.${extension}`
     const buffer = Buffer.from(await file.arrayBuffer())
-    const filePath = path.join(uploadDir, filename)
-    await writeFile(filePath, buffer)
 
-    // 返回可访问的 URL
-    const url = `/uploads/${filename}`
+    await client.putObject(config.bucket, objectName, buffer, buffer.length, {
+      "Content-Type": file.type,
+      "Cache-Control": "public, max-age=31536000, immutable",
+    })
 
-    return NextResponse.json({ url, filename })
+    return NextResponse.json({
+      url: `${config.publicUrl}/${config.bucket}/${objectName}`,
+      objectName,
+      bucket: config.bucket,
+    })
   } catch (error) {
-    console.error("Upload error:", error)
-    return NextResponse.json({ error: "上传失败" }, { status: 500 })
+    console.error("MinIO upload failed:", error)
+    const notConfigured = error instanceof Error && error.message.startsWith("Missing environment variable:")
+    return NextResponse.json(
+      { error: notConfigured ? "图片存储服务尚未配置完成" : "图片上传失败，请稍后重试" },
+      { status: notConfigured ? 503 : 500 },
+    )
   }
 }

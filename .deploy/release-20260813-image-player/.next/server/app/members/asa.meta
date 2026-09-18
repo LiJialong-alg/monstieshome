@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/members/layout,_N_T_/members/asa/layout,_N_T_/members/asa/page,_N_T_/members/asa"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/members/asa/__PAGE__",
+    "/members/asa",
+    "/members",
+    "/_index",
+    "/_head"
+  ]
+}

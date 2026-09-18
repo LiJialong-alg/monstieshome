@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/photo-booth/layout,_N_T_/photo-booth/page,_N_T_/photo-booth"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/photo-booth/__PAGE__",
+    "/photo-booth",
+    "/_index",
+    "/_head"
+  ]
+}

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import { ADMIN_COOKIE, verifyAdminToken } from "@/lib/admin-auth"
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -9,30 +10,17 @@ export function proxy(request: NextRequest) {
     // 登录页不需要验证
     if (pathname === "/admin/login") {
       // 如果已登录，直接跳到管理页
-      const token = request.cookies.get("admin_token")?.value
-      if (token) {
-        try {
-          JSON.parse(Buffer.from(token, "base64").toString("utf-8"))
-          return NextResponse.redirect(new URL("/admin/gallery", request.url))
-        } catch {
-          // token 无效，继续展示登录页
-        }
-      }
+      const token = request.cookies.get(ADMIN_COOKIE)?.value
+      if (verifyAdminToken(token)) return NextResponse.redirect(new URL("/admin/questions", request.url))
       return NextResponse.next()
     }
 
     // 其他 /admin/* 路径需要验证
-    const token = request.cookies.get("admin_token")?.value
-    if (!token) {
+    const token = request.cookies.get(ADMIN_COOKIE)?.value
+    if (!verifyAdminToken(token)) {
       return NextResponse.redirect(new URL("/admin/login", request.url))
     }
-
-    try {
-      JSON.parse(Buffer.from(token, "base64").toString("utf-8"))
-      return NextResponse.next()
-    } catch {
-      return NextResponse.redirect(new URL("/admin/login", request.url))
-    }
+    return NextResponse.next()
   }
 
   return NextResponse.next()
